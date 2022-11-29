@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
+		<item key="wrap" value="true"/>
+		<item key="casesensitive" value="false"/>
+		<item key="wholeword" value="false"/>
+		<item key="incremental" value="false"/>
+		<item key="isRegEx" value="false"/>
+		<item key="selection" value="JOptionPane"/>
+		<list key="findhistory">
+			<item value="JoptionPane"/>
+			<item value="Jop"/>
+			<item value="while"/>
+			<item value="실패"/>
+			<item value="등록"/>
+			<item value="pstmt"/>
+			<item value="date"/>
+			<item value="table"/>
+			<item value="patient"/>
+			<item value="if"/>
+			<item value="삭제"/>
+			<item value="추가"/>
+			<item value="수정"/>
+			<item value="btnNewButton_1"/>
+			<item value="조회"/>
+		</list>
+		<list key="replacehistory">
+			<item value="btn_show"/>
+			<item value="select"/>
+			<item value="addPatient_btn"/>
+			<item value=""/>
+			<item value="btnPatientSearch"/>
+			<item value="patientList"/>
+			<item value="매니저"/>
+			<item value="JPanel"/>
+			<item value="customer"/>
+			<item value="JTextField"/>
+			<item value="JLabel"/>
+		</list>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
+		<item key="DIALOG_X_ORIGIN" value="2026"/>
+		<item key="DIALOG_Y_ORIGIN" value="437"/>
+		<item key="DIALOG_WIDTH" value="418"/>
+		<item key="DIALOG_HEIGHT" value="523"/>
+		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-18|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>
+	</section>
+	<section name="org.eclipse.ui.texteditor.templates.TemplatePreferencePage$EditTemplateDialog_dialogBounds">
+		<item key="DIALOG_X_ORIGIN" value="-27"/>
+		<item key="DIALOG_Y_ORIGIN" value="49"/>
+		<item key="DIALOG_WIDTH" value="827"/>
+		<item key="DIALOG_HEIGHT" value="508"/>
+		<item key="DIALOG_FONT_NAME" value="1|맑은 고딕|9.0|0|WINDOWS|1|-18|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕"/>
+	</section>
+</section>

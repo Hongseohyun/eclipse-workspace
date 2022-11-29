@@ -1,0 +1,60 @@
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Random;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+public class RPS extends JFrame implements ActionListener {
+	
+	
+	RPS(){			//랜덤, 패널, 버튼, 레이블
+		
+		setSize(500, 500);
+		setTitle("연습");
+		//속성
+		Random ran = new Random();
+		
+		JLabel lblM= new JLabel();
+		lblM.setText("가위바위보");
+		this.add(lblM,BorderLayout.NORTH);				//add 생성자에!!!
+
+		JLabel lblR= new JLabel();
+		lblR.setText("결과는 ");
+		this.add(lblR,BorderLayout.SOUTH);
+		
+		JPanel panel = new JPanel();
+		panel.setLayout(new GridLayout(0,3));			//new 연산자 주의!!!
+		
+		JButton btn1 = new JButton("가위");
+		panel.add(btn1);
+		JButton btn2 = new JButton("바위");
+		panel.add(btn2);
+		JButton btn3 = new JButton("보");
+		panel.add(btn3);
+		
+		this.add(panel, BorderLayout.CENTER);
+		
+		
+		//기본 윈도우 설정									//주의!! 맨 밑에
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setVisible(true);
+		
+	
+	}
+	
+	public static void main(String[] args) {
+		new RPS();
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

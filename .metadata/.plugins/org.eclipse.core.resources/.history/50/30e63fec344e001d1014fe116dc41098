@@ -1,0 +1,58 @@
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.GridLayout;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+public class Cal extends JFrame {
+	JPanel panel;
+	JTextField tf;
+	JButton[] btns;
+	String[] labels= {
+			"<----------","","","ce","c",
+			"7","8","9","/","sqrt",
+			"4","5","6","x","%",
+			"1","2","3","-","1/x",
+			"0","+/-",".","+","="
+	};
+	
+	Cal(){
+		tf = new JTextField(35);
+		tf.setText("0.");
+		tf.setEnabled(false);
+		add(tf,BorderLayout.NORTH);
+		
+		panel = new JPanel();
+		panel.setLayout(new GridLayout(0,5,3,3));
+		add(panel,BorderLayout.CENTER);
+		
+		btns = new JButton[25];
+		
+		int i =0;
+		for(int row=0;row<5;row++) {
+			for(int col=0;col<5;col++) {
+				btns[i] = new JButton(labels[i]);
+				if(col >=3)
+					btns[i].setForeground(Color.yellow);
+				else
+					btns[i].setForeground(Color.white);
+				
+				btns[i].setBackground(Color.pink);
+				panel.add(btns[i]);
+				i++;
+
+			}
+		}
+		setVisible(true);
+		pack();
+	}
+	
+
+	public static void main(String[] args) {
+		new Cal();
+	}
+
+}

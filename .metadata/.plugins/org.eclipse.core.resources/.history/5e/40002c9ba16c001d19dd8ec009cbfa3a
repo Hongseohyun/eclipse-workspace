@@ -1,0 +1,661 @@
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import java.awt.BorderLayout;
+import java.awt.Color;
+
+import javax.swing.JComboBox;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.JLabel;
+import javax.swing.SpringLayout;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.border.MatteBorder;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.awt.Font;
+import javax.swing.SwingConstants;
+import javax.swing.JScrollBar;
+import javax.swing.JSpinner;
+import javax.swing.JTable;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.DefaultComboBoxModel;
+import java.time.DayOfWeek;
+import java.time.Month;
+import javax.swing.table.*;
+import javax.swing.JList;
+import javax.swing.AbstractListModel;
+
+public class Doctors extends JFrame {
+   static String driver, url;
+   static Connection conn;
+   static Statement stmt;
+   static ResultSet rs;
+   static String tmpstr;
+   static PreparedStatement pstmt;
+  
+   
+   private JPanel contentPane;
+   private JTextField pname_tf;
+   private JTextField prrn_tf;
+   private JTextField ptelno_tf;
+   private JTextField textField_5;
+   private JTextField textField_6;
+   private JTable patient_table;
+   private JTable history;
+   private JTable diagnosis;
+   private JTable chart;
+   DefaultTableModel model;
+   DefaultTableModel model1;
+   DefaultTableModel model2;
+   DefaultTableModel model3;
+   String textFieldValue;
+   private JTextField padd_tf;
+   private JTextField petc_tf;
+
+   /**
+    * Launch the application.
+    */
+   public static void main(String[] args) {
+      EventQueue.invokeLater(new Runnable() {
+         public void run() {
+            try {
+               Doctors frame = new Doctors();
+               frame.setVisible(true);
+            } catch (Exception e) {
+               e.printStackTrace();
+            }
+         }
+      });
+   }
+
+   /**
+    * Create the frame.
+    */
+   
+
+   
+
+   
+   
+   public Doctors() {
+
+      setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      setBounds(100, 100, 1529, 1028);
+      
+      JMenuBar menuBar = new JMenuBar();
+      setJMenuBar(menuBar);
+      
+      JMenu mnNewMenu = new JMenu("의사용");
+      menuBar.add(mnNewMenu);
+      
+      JMenuItem mntmNewMenuItem = new JMenuItem("작성 화면으로 이동");
+      mnNewMenu.add(mntmNewMenuItem);
+      mntmNewMenuItem.addActionListener(new ActionListener() {
+         public void actionPerformed(ActionEvent e) {
+            new Doctors().setVisible(true); // 
+         }
+      });
+      
+      JMenu mnNewMenu_1 = new JMenu("간호사용");
+      menuBar.add(mnNewMenu_1);
+      
+      JMenuItem mntmNewMenuItem_1 = new JMenuItem("작성 화면으로 이동");
+      mnNewMenu_1.add(mntmNewMenuItem_1);
+      contentPane = new JPanel();
+      contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+      mntmNewMenuItem_1.addActionListener(new ActionListener() {
+         public void actionPerformed(ActionEvent e) {
+            new Doctors().setVisible(true); // 
+         }
+      });
+      
+
+      setContentPane(contentPane);
+      contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS));
+      
+      JPanel panel = new JPanel();
+      panel.setForeground(new Color(255, 0, 0));
+      contentPane.add(panel);
+      panel.setLayout(null);
+      
+      JLabel pname_lb = new JLabel("성명");
+      pname_lb.setFont(new Font("맑은 고딕", Font.PLAIN, 12));
+      pname_lb.setBounds(12, 44, 115, 29);
+      panel.add(pname_lb);
+      
+      pname_tf = new JTextField();
+      pname_tf.setBounds(63, 44, 303, 20);
+      panel.add(pname_tf);
+      pname_tf.setColumns(10);
+      System.out.println(pname_tf);
+      
+      JLabel lblNewLabel_1 = new JLabel("주민번호");
+      lblNewLabel_1.setFont(new Font("맑은 고딕", Font.PLAIN, 12));
+      lblNewLabel_1.setBounds(12, 93, 75, 29);
+      panel.add(lblNewLabel_1);
+      
+      prrn_tf = new JTextField();
+      prrn_tf.setColumns(10);
+      prrn_tf.setBounds(63, 99, 303, 20);
+      panel.add(prrn_tf);
+      //select();
+      
+      JLabel lblNewLabel_1_2 = new JLabel("전화번호");
+      lblNewLabel_1_2.setFont(new Font("맑은 고딕", Font.PLAIN, 12));
+      lblNewLabel_1_2.setBounds(12, 68, 99, 29);
+      panel.add(lblNewLabel_1_2);
+      
+      ptelno_tf = new JTextField();
+      ptelno_tf.setColumns(10);
+      ptelno_tf.setBounds(63, 71, 303, 20);
+      panel.add(ptelno_tf);
+      
+      JPanel panel_1 = new JPanel();
+      panel_1.setBounds(466, 0, 1039, 218);
+      panel.add(panel_1);
+      panel_1.setLayout(null);
+      
+      JLabel lblNewLabel_2 = new JLabel("환자 상세 정보");
+      lblNewLabel_2.setFont(new Font("맑은 고딕", Font.BOLD, 15));
+      lblNewLabel_2.setBounds(12, 10, 117, 15);
+      panel_1.add(lblNewLabel_2);
+      
+      JLabel lblNewLabel_6_1 = new JLabel("병력");
+      lblNewLabel_6_1.setFont(new Font("맑은 고딕", Font.BOLD, 15));
+      lblNewLabel_6_1.setBounds(539, 10, 177, 15);
+      panel_1.add(lblNewLabel_6_1);
+      
+      JScrollPane scrollPane_3 = new JScrollPane();
+      scrollPane_3.setBounds(539, 48, 446, 160);
+      panel_1.add(scrollPane_3);
+      
+      history = new JTable();
+      scrollPane_3.setViewportView(history);
+      history.setFont(new Font("맑은 고딕", Font.PLAIN, 12));
+      history.setModel(new DefaultTableModel(
+         new Object[][] {
+            {null, null, null, null, null},
+            {null, null, null, null, null},
+            {null, null, null, null, null},
+            {null, null, null, null, null},
+            {null, null, null, null, null},
+            {null, null, null, null, null},
+            {null, null, null, null, null},
+            {null, null, null, null, null},
+            {null, null, null, null, null},
+            {null, null, null, null, null},
+         },
+         new String[] {
+            "\uC9C8\uBCD1\uBC88\uD638", "\uC9C8\uBCD1\uC774\uB984", "\uCE58\uB8CC\uC2DC\uC791\uC77C", "\uCE58\uB8CC\uC885\uB8CC\uC77C", "\uC99D\uC0C1"
+         }
+      ));
+      Object contents1[][] = new Object[0][2];
+      String header1[]= {"\uC9C8\uBCD1\uBC88\uD638", "\uC9C8\uBCD1\uC774\uB984", "\uCE58\uB8CC\uC2DC\uC791\uC77C", "\uCE58\uB8CC\uC885\uB8CC\uC77C", "\uC99D\uC0C1"};
+      model1=new DefaultTableModel(contents1, header1);
+      history.setModel(model1);
+      
+      JScrollPane scrollPane = new JScrollPane();
+      scrollPane.setBounds(22, 35, 442, 183);
+      panel_1.add(scrollPane);
+      
+      //===================================================================================
+      //===================================================================================
+      //===================================================================================
+
+      patient_table = new JTable(model);
+      scrollPane.setViewportView(patient_table);
+      patient_table.setFont(new Font("맑은 고딕", Font.PLAIN, 12));
+      patient_table.setModel(new DefaultTableModel(
+      	new Object[][] {
+      		{null, null, null, null, null},
+      	},
+      	new String[] {
+      		"\uC131\uBA85", "\uC804\uD654\uBC88\uD638", "\uC8FC\uBBFC\uBC88\uD638", "\uC8FC\uC18C", "\uBE44\uACE0"
+      	}
+      ));
+      //patient_table.setModel(model);
+      Object contents[][] = new Object[0][2];
+      String header[]= {"\uC131\uBA85", "\uC804\uD654\uBC88\uD638", "\uC8FC\uBBFC\uBC88\uD638", "\uC8FC\uC18C", "\uBE44\uACE0"};
+      model=new DefaultTableModel(contents, header);
+      patient_table.setModel(model);
+      //System.out.println(model+"fsadfasdf");
+      SwingDemo.dbConnect();
+      selectPatient();
+      
+    
+	  //===================================================================================
+	  //===================================================================================
+	  //===================================================================================
+      
+      JPanel panel_2 = new JPanel();
+      panel_2.setBounds(-28, 475, 1505, 483);
+      panel.add(panel_2);
+      panel_2.setLayout(null);
+      
+      JScrollPane scrollPane_4 = new JScrollPane();
+      scrollPane_4.setBounds(38, 89, 1412, 318);
+      panel_2.add(scrollPane_4);
+      
+      JTextArea textArea = new JTextArea();
+      scrollPane_4.setViewportView(textArea);
+      textArea.setFont(new Font("맑은 고딕 Semilight", Font.PLAIN, 18));
+      textArea.setText("진료 내용을 입력하세요");
+      
+      JLabel lblNewLabel_3 = new JLabel("환자 이름");
+      lblNewLabel_3.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
+      lblNewLabel_3.setBounds(38, 29, 99, 47);
+      panel_2.add(lblNewLabel_3);
+      
+      textField_5 = new JTextField();
+      textField_5.setColumns(10);
+      textField_5.setBounds(118, 33, 265, 38);
+      panel_2.add(textField_5);
+      
+      JLabel lblNewLabel_3_1 = new JLabel("담당의사번호");
+      lblNewLabel_3_1.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
+      lblNewLabel_3_1.setBounds(525, 29, 126, 47);
+      panel_2.add(lblNewLabel_3_1);
+      
+      textField_6 = new JTextField();
+      textField_6.setColumns(10);
+      textField_6.setBounds(646, 33, 311, 38);
+      panel_2.add(textField_6);
+      
+      JComboBox comboBox_2 = new JComboBox();
+      comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"sysdate"}));
+      comboBox_2.setToolTipText("2022");
+      comboBox_2.setBounds(407, 34, 90, 37);
+      panel_2.add(comboBox_2);
+      
+      JButton btnNewButton = new JButton("저장");
+      btnNewButton.setBounds(1248, 430, 95, 23);
+      panel_2.add(btnNewButton);
+      
+      JButton btnNewButton_2 = new JButton("메인화면");
+      btnNewButton_2.setBounds(1355, 430, 95, 23);
+      panel_2.add(btnNewButton_2);
+      
+      btnNewButton_2.addActionListener(new ActionListener() {
+         public void actionPerformed(ActionEvent e) {
+            new SwingDemo().setVisible(true); // 
+         }
+      });
+      
+      JButton btnNewButton_1 = new JButton("조회");
+      btnNewButton_1.setBounds(27, 431, 95, 23);
+      panel.add(btnNewButton_1);
+      btnNewButton_1.addActionListener(new ActionListener(){
+         public void actionPerformed(ActionEvent ae){
+        	 selectPatient();
+              selectHistory();
+              selectDiagnosis();
+              selectChart();
+         }
+         });
+      
+      JLabel lblNewLabel_4 = new JLabel("환자 관리");
+      lblNewLabel_4.setFont(new Font("맑은 고딕", Font.BOLD, 15));
+      lblNewLabel_4.setBounds(12, 22, 156, 15);
+      panel.add(lblNewLabel_4);
+      
+     
+      
+      JPanel panel_3 = new JPanel();
+      panel_3.setBounds(466, 229, 501, 240);
+      panel.add(panel_3);
+      panel_3.setLayout(null);
+      
+      JLabel lblNewLabel_6 = new JLabel("진료 및 검사 내역");
+      lblNewLabel_6.setFont(new Font("맑은 고딕", Font.BOLD, 15));
+      lblNewLabel_6.setBounds(12, 10, 177, 15);
+      panel_3.add(lblNewLabel_6);
+      
+      JScrollPane scrollPane_1 = new JScrollPane();
+      scrollPane_1.setBounds(22, 35, 478, 181);
+      panel_3.add(scrollPane_1);
+      
+      diagnosis = new JTable();
+      scrollPane_1.setViewportView(diagnosis);
+      diagnosis.setFont(new Font("맑은 고딕", Font.PLAIN, 12));
+      diagnosis.setModel(new DefaultTableModel(
+      	new Object[][] {
+      		{null, null, null, null},
+      	},
+      	new String[] {
+      		"\uC131\uBA85", "\uC804\uD654\uBC88\uD638", "\uC8FC\uBBFC\uBC88\uD638", "\uB2F4\uB2F9\uC758\uC0AC\uBC88\uD638"
+      	}
+      ));
+      Object contents2[][] = new Object[0][2];
+      String header2[]= {"\uC131\uBA85", "\uC804\uD654\uBC88\uD638", "\uC8FC\uBBFC\uBC88\uD638", "\uB2F4\uB2F9\uC758\uC0AC\uBC88\uD638"};
+      model2=new DefaultTableModel(contents2, header2);
+      diagnosis.setModel(model2);
+      //System.out.println(model+"fsadfasdf");
+      
+      
+      
+      JPanel panel_3_1 = new JPanel();
+      panel_3_1.setLayout(null);
+      panel_3_1.setBounds(976, 225, 501, 240);
+      panel.add(panel_3_1);
+      
+      JLabel lblNewLabel_6_2 = new JLabel("차트 내역");
+      lblNewLabel_6_2.setFont(new Font("맑은 고딕", Font.BOLD, 15));
+      lblNewLabel_6_2.setBounds(12, 10, 177, 15);
+      panel_3_1.add(lblNewLabel_6_2);
+      
+      JScrollPane scrollPane_2 = new JScrollPane();
+      scrollPane_2.setBounds(22, 35, 478, 181);
+      panel_3_1.add(scrollPane_2);
+      
+      chart = new JTable();
+      scrollPane_2.setViewportView(chart);
+      chart.setFont(new Font("맑은 고딕", Font.PLAIN, 12));
+      chart.setModel(new DefaultTableModel(
+      	new Object[][] {
+      		{null, null, null, null},
+      		{null, null, null, null},
+      		{null, null, null, null},
+      		{null, null, null, null},
+      		{null, null, null, null},
+      		{null, null, null, null},
+      		{null, null, null, null},
+      		{null, null, null, null},
+      		{null, null, null, null},
+      		{null, null, null, null},
+      	},
+      	new String[] {
+      		"\uCC28\uD2B8\uBC88\uD638", "\uCC28\uD2B8\uB0B4\uC6A9", "\uD658\uC790\uBC88\uD638", "\uAC04\uD638\uC0AC\uBC88\uD638"
+      	}
+      ));
+      Object contents3[][] = new Object[0][2];
+      String header3[]= {"\uCC28\uD2B8\uBC88\uD638", "\uCC28\uD2B8\uB0B4\uC6A9", "\uD658\uC790\uBC88\uD638", "\uAC04\uD638\uC0AC\uBC88\uD638"};
+      model3=new DefaultTableModel(contents3, header3);
+      chart.setModel(model3);
+      
+
+      JButton addPatient_btn = new JButton("추가");
+      addPatient_btn.setBounds(245, 431, 95, 23);
+      panel.add(addPatient_btn);
+      addPatient_btn.addActionListener(new ActionListener(){
+         public void actionPerformed(ActionEvent ae){
+              try {
+
+                
+                String query = "insert into patient values(null,'" + pname_tf.getText() + "','" + ptelno_tf.getText()
+                      + "','" + prrn_tf.getText() + "','" + padd_tf.getText() + "','" + petc_tf.getText() + "')";
+
+                pstmt = SwingDemo.conn.prepareStatement(query);
+                int k = pstmt.executeUpdate(query);
+                System.out.println("pstmt:" + pstmt);
+                System.out.println("rs:" + rs);
+
+                if (k == 1) {
+                   JOptionPane.showMessageDialog(null, "환자가 추가 되었습니다.");
+                   pname_tf.setText("");
+                   ptelno_tf.setText("");
+                   prrn_tf.setText("");
+                   padd_tf.setText("");
+                   petc_tf.setText("");
+
+                   
+
+                } else {
+                   JOptionPane.showMessageDialog(null, "등록 실패.");
+                }
+             } catch (Exception e) {
+                System.out.println(e.getMessage());
+             }
+               
+         }
+         });
+
+      
+      JLabel lblNewLabel_1_1 = new JLabel("주소");
+      lblNewLabel_1_1.setFont(new Font("맑은 고딕", Font.PLAIN, 12));
+      lblNewLabel_1_1.setBounds(12, 123, 75, 29);
+      panel.add(lblNewLabel_1_1);
+      
+      padd_tf = new JTextField();
+      padd_tf.setColumns(10);
+      padd_tf.setBounds(63, 129, 303, 20);
+      panel.add(padd_tf);
+      
+      JLabel lblNewLabel_1_3 = new JLabel("비고");
+      lblNewLabel_1_3.setFont(new Font("맑은 고딕", Font.PLAIN, 12));
+      lblNewLabel_1_3.setBounds(12, 152, 75, 29);
+      panel.add(lblNewLabel_1_3);
+      
+      petc_tf = new JTextField();
+      petc_tf.setColumns(10);
+      petc_tf.setBounds(63, 159, 303, 20);
+      panel.add(petc_tf);
+      
+      JButton delPatient_btn = new JButton("삭제");
+      delPatient_btn.setBounds(352, 431, 95, 23);
+      panel.add(delPatient_btn);
+      delPatient_btn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// 선택한 줄 번호 알아내기
+				int rowIndex = patient_table.getSelectedRow();
+				String v = model.getValueAt(rowIndex, 0).toString();
+				// 선택 안하고 누를 경우 리턴 값 -1
+				if (rowIndex == -1)
+					return;
+				String query = "delete from patient where pname= "+"'"+v+"'";
+				System.out.println(query);
+				try {
+					pstmt = SwingDemo.conn.prepareStatement(query);
+					pstmt.execute();
+					
+					JOptionPane.showMessageDialog(null,"Deleted Succesfully");
+				} catch (Exception e2) {
+					// TODO: handle exception
+					JOptionPane.showMessageDialog(null,"Deleted Error!!");
+					System.out.println("deleted error : " + e2.getMessage());
+				} model.removeRow(rowIndex);
+				
+			}
+			});
+      
+      JButton modi_btn = new JButton("수정");
+      modi_btn.setBounds(134, 431, 95, 23);
+      panel.add(modi_btn);
+      modi_btn.addActionListener(new ActionListener() {
+    	  @Override
+          public void actionPerformed(ActionEvent e) {
+             
+             String query = "update patient set ptelno ='"+ptelno_tf.getText()+"',prrn='"+prrn_tf.getText()+"',padd='"+padd_tf.getText()+"',petc='"+petc_tf.getText()+"' where pname='"+pname_tf.getText()+"'";
+             System.out.println(query);
+             
+             
+                try {
+                   pstmt = SwingDemo.conn.prepareStatement(query);
+                   pstmt.executeUpdate(query);
+                   JOptionPane.showMessageDialog(null, "수정 완료!");
+                   
+
+                } catch (Exception e1) {
+                   // TODO Auto-generated catch block
+                   JOptionPane.showMessageDialog(null, "수정 실패!");
+                }
+          }
+       });
+				
+		
+      
+      
+      
+      
+   }
+
+
+public void selectPatient() {
+         
+      try {
+
+            model.setNumRows(0);
+            String query = "select *from patient where pname like '%" + pname_tf.getText() + "%'" ;
+            pstmt = SwingDemo.conn.prepareStatement(query);
+            rs = pstmt.executeQuery(query);   
+//            System.out.println("pstmt:"+pstmt);
+//            System.out.println("rs:"+rs);
+     
+         while(rs.next()) {
+           String name =rs.getString("pname");
+            String telno = rs.getString("ptelno");
+            String rrn = rs.getString("prrn");
+            String add = rs.getString("padd");
+            String etc = rs.getString("petc");
+            Object data[]= {name,telno,rrn,add,etc};
+            model.addRow(data);
+            //System.out.println("data :"+ data);
+              
+            }
+         }catch(Exception e) {
+            System.out.println(e.getMessage());
+         }   
+      }
+   public void selectHistory() {
+       
+	      try {
+
+	            model1.setNumRows(0);
+	            String query = "SELECT h.h_num, h.hname, h.tr_start, h.tr_end, h.symptom\r\n"
+	            		+ "FROM patient p \r\n"
+	            		+ "JOIN history h ON p.prrn= h.hprrn\r\n"
+	            		+ "WHERE pname like '%"+ pname_tf.getText() + "%'" + "and h.hprrn = "+ prrn_tf.getText() ;
+	            System.out.println(query);
+	            pstmt = SwingDemo.conn.prepareStatement(query);
+	            rs = pstmt.executeQuery(query);   
+//	            System.out.println("pstmt:"+pstmt);
+//	            System.out.println("rs:"+rs);
+	     
+	         while(rs.next()) {
+	           String h_num =rs.getString("h_num");
+	            String hname = rs.getString("hname");
+	            String tr_start = rs.getString("tr_start");
+	            String tr_end = rs.getString("tr_end");
+	            String symptom = rs.getString("symptom");
+	            Object data[]= {h_num,hname,tr_start,tr_end,symptom};
+	            model1.addRow(data);
+	            //System.out.println("data :"+ data);
+	              
+	            }
+	         }catch(Exception e) {
+	            System.out.println(e.getMessage());
+	         }   
+	      }
+   public void selectDiagnosis() {
+       
+	      try {
+
+	            model2.setNumRows(0);
+	            String query = "SELECT d.dg_num, d.dg_content, d.dg_date, d.dg_dnum\r\n"
+	            		+ "FROM patient p \r\n"
+	            		+ "JOIN diagnosis d ON p.prrn = d.dg_prrn\r\n"
+	            		+ "WHERE p.pname like '%"+ pname_tf.getText() + "%' and p.prrn = "+ prrn_tf.getText() ;
+//	            System.out.println(query);
+	            pstmt = SwingDemo.conn.prepareStatement(query);
+	            rs = pstmt.executeQuery(query);   
+//	            System.out.println("pstmt:"+pstmt);
+//	            System.out.println("rs:"+rs);
+	     
+	         while(rs.next()) {
+	            String dg_num =rs.getString("dg_num");
+	            String dg_content = rs.getString("dg_content");
+	            String dg_date = rs.getString("dg_date");
+	            String dg_dnum =rs.getString("dg_dnum");
+	           
+	            Object data[]= {dg_num,dg_content,dg_date,dg_dnum};
+	            model2.addRow(data);
+	            //System.out.println("data :"+ data);
+	            }
+	         }catch(Exception e) {
+	            System.out.println("진료 쿼리 :"+e.getMessage());
+	         }   
+	      }
+   public void selectChart() {
+       
+	      try {
+
+	            model3.setNumRows(0);
+	            String query = "SELECT c.char_num, c.chart_content, p.p_num, n.n_num\r\n"
+	            		+ "FROM patient p\r\n"
+	            		+ "JOIN chart c ON p.p_num = c.chart_pnum\r\n"
+	            		+ "JOIN nurse n ON n.n_num = c.chart_nnum\r\n"
+	            		+ "WHERE p.pname like '%"+ pname_tf.getText() + "%' and p.prrn = "+ prrn_tf.getText() ;
+//	            System.out.println(query);
+	            pstmt = SwingDemo.conn.prepareStatement(query);
+	            rs = pstmt.executeQuery(query);   
+//	            System.out.println("pstmt:"+pstmt);
+//	            System.out.println("rs:"+rs);
+	     
+	         while(rs.next()) {
+	            String char_num=rs.getString("char_num");
+	            String chart_content = rs.getString("chart_content");
+	            String p_num = rs.getString("p_num");
+	            String n_num =rs.getString("n_num");
+	           
+	            Object data[]= {char_num,chart_content,p_num,n_num};
+	            model3.addRow(data);
+	            //System.out.println("data :"+ data);
+	            }
+	         }catch(Exception e) {
+	            System.out.println("차트 쿼리 :"+e.getMessage());
+	         }   
+	      }
+   
+   public class mouseListener implements MouseListener{
+		 @Override
+		 public void mouseClicked(MouseEvent e) {
+		   int row = patient_table.getSelectedRow();
+		  int col = patient_table.getSelectedColumn();
+		  for (int i = 0; i < patient_table.getColumnCount(); i++) {
+		   System.out.print(patient_table.getModel().getValueAt(row,i )+"\t"); 
+		  }
+
+		 }
+
+		 @Override
+		 public void mousePressed(MouseEvent e) {
+		  // TODO Auto-generated method stub
+		  
+		 }
+
+		 @Override
+		 public void mouseReleased(MouseEvent e) {
+		  // TODO Auto-generated method stub
+		  
+		 }
+
+		 @Override
+		 public void mouseEntered(MouseEvent e) {
+		  // TODO Auto-generated method stub
+		  
+		 }
+
+		 @Override
+		 public void mouseExited(MouseEvent e) {
+		  // TODO Auto-generated method stub
+		  
+		 }
+	}
+
+}

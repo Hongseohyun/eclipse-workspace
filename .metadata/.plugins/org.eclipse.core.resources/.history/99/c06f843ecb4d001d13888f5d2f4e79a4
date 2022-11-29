@@ -1,0 +1,92 @@
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Random;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+public class RockPaperScissors extends JFrame implements ActionListener {
+	final int SCISSORS =1;
+	final int ROCK =2;
+	final int PAPER =3;
+	int computer;
+
+	JLabel lblMessage, lblResult;
+	JPanel panel;
+	JButton btnS, btnR, btnP;
+	
+	Random random;
+	
+	RockPaperScissors(){
+		
+		random = new Random();
+		
+		lblMessage = new JLabel();
+		lblMessage.setText("세개의 버튼중 하나를 선택하세요");
+		this.add(lblMessage, BorderLayout.NORTH);
+		
+		panel = new JPanel();
+		panel.setLayout(new GridLayout(0,3));
+		
+		btnS = new JButton("가위");
+		panel.add(btnS);
+		btnR = new JButton("바위");
+		panel.add(btnR);
+		btnP = new JButton("보");
+		panel.add(btnP);
+		
+		this.add(panel,BorderLayout.CENTER);
+		
+		lblResult = new JLabel();
+		lblResult.setText("결과");
+		this.add(lblResult,BorderLayout.SOUTH);
+		
+		btnS.addActionListener(this);
+		btnR.addActionListener(this);
+		btnP.addActionListener(this);
+		
+		this.setTitle("가위 바위 보");
+		this.setSize(500,400);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setVisible(true);
+		
+	}
+	
+	public static void main(String[] args) {
+
+		new RockPaperScissors();
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+
+		computer = random.nextInt(3)+1;
+		
+		if(e.getSource() == btnS)
+			if(computer == SCISSORS)
+				lblResult.setText("비겼습니다.");
+			else if (computer == ROCK)
+				lblResult.setText("컴퓨터의 승리.");
+			else if (computer == PAPER)
+				lblResult.setText("당신의 승리.");
+		if(e.getSource() == btnP)
+			if(computer == SCISSORS)
+				lblResult.setText("컴퓨터의 승리.");
+			else if (computer == ROCK)
+				lblResult.setText("당신의 승리.");
+			else if (computer == PAPER)
+				lblResult.setText("비겼습니다..");
+		if(e.getSource() == btnR)
+			if(computer == PAPER)
+				lblResult.setText("당신의 승리.");
+			else if (computer == ROCK)
+				lblResult.setText("비겼습니다..");
+			else if (computer == PAPER)
+				lblResult.setText("컴퓨터의 승리.");
+	}
+
+}

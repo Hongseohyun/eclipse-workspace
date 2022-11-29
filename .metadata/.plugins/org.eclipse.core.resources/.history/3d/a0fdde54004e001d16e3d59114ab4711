@@ -1,0 +1,45 @@
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Random;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+public class RPS extends JFrame implements ActionListener {
+	
+	
+	RPS(){			//랜덤, 패널, 버튼, 레이블
+		//기본 윈도우 설정
+		setTitle("연습");
+		setSize(500, 500);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setVisible(true);
+		
+		//속성
+		Random ran = new Random();
+		
+		JLabel lblM= new JLabel();
+		lblM.setText("가위바위보");
+		this.add(lblM,BorderLayout.NORTH);
+
+		JLabel lblR= new JLabel();
+		lblR.setText("결과는 ");
+		this.add(lblR,BorderLayout.SOUTH);
+		
+		
+		
+	
+	}
+	
+	public static void main(String[] args) {
+		RPS();
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

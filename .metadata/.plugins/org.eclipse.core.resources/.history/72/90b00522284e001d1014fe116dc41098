@@ -1,0 +1,31 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+public class RSP extends JFrame implements ActionListener {
+
+	final int S=1;
+	final int R=2;
+	final int P=3;
+	int computer;
+	
+	JPanel panel;
+	JLabel msg,result;
+	JButton b1,b2,b3;
+	Random = ran;
+	
+	public static void main(String[] args) {
+		new RSP();
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

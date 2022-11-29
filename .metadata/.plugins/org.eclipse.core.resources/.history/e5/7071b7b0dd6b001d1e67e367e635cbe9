@@ -1,0 +1,38 @@
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
+public class mouseListener implements MouseListener{
+	 @Override
+	 public void mouseClicked(MouseEvent e) {
+	   int row = patient_table.getSelectedRow();
+	  int col = patient_table.getSelectedColumn();
+	  for (int i = 0; i < patient_table.getColumnCount(); i++) {
+	   System.out.print(patient_table.getModel().getValueAt(row,i )+"\t"); 
+	  }
+
+	 }
+
+	 @Override
+	 public void mousePressed(MouseEvent e) {
+	  // TODO Auto-generated method stub
+	  
+	 }
+
+	 @Override
+	 public void mouseReleased(MouseEvent e) {
+	  // TODO Auto-generated method stub
+	  
+	 }
+
+	 @Override
+	 public void mouseEntered(MouseEvent e) {
+	  // TODO Auto-generated method stub
+	  
+	 }
+
+	 @Override
+	 public void mouseExited(MouseEvent e) {
+	  // TODO Auto-generated method stub
+	  
+	 }
+}

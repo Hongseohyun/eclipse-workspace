@@ -1,0 +1,99 @@
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Random;
+ 
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+ 
+public class RockPaperScissors extends JFrame implements ActionListener {
+    JLabel lblDisplay, lblOutput;
+    JButton btnRock, btnPaper, btnScissor;
+    JPanel panel;
+    final int ROCK = 0;//상수값은 대문자로 준다
+    final int PAPER = 1;
+    final int SCISSOR = 2;
+    
+    RockPaperScissors() {
+        lblDisplay = new JLabel();
+        lblOutput = new JLabel();
+        panel = new JPanel();
+        panel.setLayout(new GridLayout(1, 3));
+        btnRock = new JButton("주먹");
+        btnPaper = new JButton("보");
+        btnScissor = new JButton("가위");
+ 
+        panel.add(btnRock);
+        panel.add(btnPaper);
+        panel.add(btnScissor);
+        
+        
+        add(lblDisplay, BorderLayout.NORTH);
+        add(lblOutput, BorderLayout.SOUTH);
+ 
+        add(panel, BorderLayout.CENTER);
+        
+        setSize(300, 300);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setVisible(true);
+        
+        btnRock.addActionListener(this);
+        btnPaper.addActionListener(this);
+        btnScissor.addActionListener(this);        
+        
+    }
+    public void actionPerformed(ActionEvent e) {
+        Random r = new Random();
+        int computer = r.nextInt(3);
+ 
+ if(e.getSource() == btnRock) lblDisplay.setText("주먹를 눌렸습니다."); else if (e.getSource() == btnPaper) lblDisplay.setText("보를 눌렀습니다."); else lblDisplay.setText("가위를 눌렀습니다."); 
+        
+        if(e.getSource()== btnRock )
+ 
+            if(computer == ROCK)
+ 
+            lblOutput.setText("비겼습니다." + " computer가 낸 것은" + computer );
+ 
+            else if (computer == PAPER)
+ 
+                lblOutput.setText("computer가 이겼습니다." + " computer가 낸 것은" + computer);
+ 
+            else
+ 
+                lblOutput.setText("사용자가 이겼습니다." + " computer가 낸 것은" + computer);
+ 
+        else if(e.getSource() == btnPaper )
+ 
+        if(computer == ROCK)
+ 
+            lblOutput.setText("사용자가 이겼습니다." + " computer가 낸 것은" + computer);
+ 
+            else if (computer == PAPER)
+ 
+                lblOutput.setText("비겼습니다." + " computer가 낸 것은" + computer);
+ 
+            else
+ 
+                lblOutput.setText("computer가 이겼습니다." + " computer가 낸 것은" + computer);
+ 
+        else 
+ 
+            if(computer == ROCK)
+ 
+                lblOutput.setText("computer가 이겼습니다." + " computer가 낸 것은" + computer);
+ 
+                else if (computer == PAPER)
+ 
+                    lblOutput.setText("사용자가 이겼습니다." + " computer가 낸 것은" + computer);
+ 
+                else
+ 
+                    lblOutput.setText("비겼습니다." + " computer가 낸 것은" + computer);
+        
+        
+ 
+    }
+}

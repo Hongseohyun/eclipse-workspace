@@ -1,0 +1,51 @@
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Random;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+public class RPS extends JFrame implements ActionListener {
+
+	final int S=1;
+	final int R=2;
+	final int P=3;
+	int computer;
+	JPanel panel;
+	JButton b1,b2,b3;
+	JLabel result, msg;
+	Random ran;
+	
+	RPS(){
+		ran = new Random();
+		
+		msg = new JLabel();
+		msg.setText("3중1택");
+		this.add(msg,BorderLayout.NORTH);
+		result = new JLabel();
+		result.setText("결과");
+		this.add(result,BorderLayout.SOUTH);
+		
+		panel = new JPanel();
+		panel.setLayout(new GridLayout(0,3));
+		this.add(panel,BorderLayout.CENTER);
+		
+		b1 = new JButton("가위");
+		panel.add(b1);
+	}
+	
+	public static void main(String[] args) {
+		new RPS();
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}
